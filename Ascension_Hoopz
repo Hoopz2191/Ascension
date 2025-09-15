@@ -1,0 +1,47 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer or Players:GetPlayers()[1]
+if not player then return end
+local gui = Instance.new("ScreenGui")
+gui.ResetOnSpawn = false
+gui.DisplayOrder = 2147483647
+gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = player:WaitForChild("PlayerGui")
+local black = Instance.new("Frame")
+black.Name = "BlackOverlay"
+black.BackgroundColor3 = Color3.fromRGB(0,0,0)
+black.Size = UDim2.new(1,0,1,0)
+black.Position = UDim2.new(0,0,0,0)
+black.BackgroundTransparency = 1
+black.BorderSizePixel = 0
+black.ZIndex = 1000000
+black.Parent = gui
+local logo = Instance.new("ImageLabel")
+logo.AnchorPoint = Vector2.new(0.5,0.5)
+logo.Position = UDim2.new(0.5,0,0.5,0)
+logo.Size = UDim2.new(0.7,0,0.7,0)
+logo.BackgroundTransparency = 1
+logo.Image = "rbxassetid://114418306826694"
+logo.ImageTransparency = 1
+logo.ZIndex = 1000001
+logo.ScaleType = Enum.ScaleType.Fit
+logo.Parent = gui
+local tweenInTime = 1.2
+local holdTime = 1.2
+local tweenOutTime = 1
+local t1 = TweenService:Create(black, TweenInfo.new(tweenInTime, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {BackgroundTransparency = 0})
+local t2 = TweenService:Create(logo, TweenInfo.new(tweenInTime, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {ImageTransparency = 0})
+t1:Play()
+t2:Play()
+t2.Completed:Wait()
+task.wait(holdTime)
+local t3 = TweenService:Create(logo, TweenInfo.new(tweenOutTime, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {ImageTransparency = 1})
+local t4 = TweenService:Create(black, TweenInfo.new(tweenOutTime, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {BackgroundTransparency = 1})
+t3:Play()
+t4:Play()
+t4.Completed:Wait()
+gui:Destroy()
+pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Hoopz2191/Ascension/refs/heads/main/Hoopz"))()
+end)
